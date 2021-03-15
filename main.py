@@ -128,16 +128,8 @@ def read_template() -> str:
     return template
 
 
-# def run_command(command: str) -> subprocess.Popen:
 def run_command(command: str):
-    """
-    Run a shell command with subprocess module with realtime output.
-    :param command: A command string to run.
-    :return: A subprocess instance.
-    """
     print(command)
-    # subprocess.run(command, shell=True, stderr=subprocess.STDOUT,
-    #                encoding='utf-8')
     start_time = time.time()
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,
                                stderr=subprocess.STDOUT, encoding='utf-8')
@@ -151,4 +143,4 @@ def run_command(command: str):
 
 if __name__ == '__main__':
     main('erp', 'erp2cmp')
-    # main('cmp', 'cmp2erp')
+    main('cmp', 'cmp2erp')
