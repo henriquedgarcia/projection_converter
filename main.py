@@ -27,7 +27,7 @@ cmp_params = {'SourceWidth'       : '2880',
               }
 
 
-def main(folder, conversion, overwrite=False, remove_yuv=False):
+def main(folder, conversion, duration=None, overwrite=False, remove_yuv=False):
     for in_file in glob.glob(f'{folder}/*.mp4'):
         name = os.path.split(in_file)[1][:-4]
         compressed_file = f'output/{name}_{conversion}.mp4'
@@ -40,7 +40,7 @@ def main(folder, conversion, overwrite=False, remove_yuv=False):
 
         os.makedirs('temp/', exist_ok=True)
 
-        uncompress(in_file, uncompressed_file, conversion, 10, overwrite)
+        uncompress(in_file, uncompressed_file, conversion, duration, overwrite)
         converter(uncompressed_file, converted_file, conversion, overwrite)
         compress(converted_file, compressed_file, conversion, overwrite)
 
@@ -142,5 +142,5 @@ def run_command(command: str):
 
 
 if __name__ == '__main__':
-    main('erp', 'erp2cmp')
-    main('cmp', 'cmp2erp')
+    main('erp', 'erp2cmp', duration=None, overwrite=False, remove_yuv=False)
+    main('cmp', 'cmp2erp', duration=None, overwrite=False, remove_yuv=False)
