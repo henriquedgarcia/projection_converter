@@ -63,11 +63,11 @@ def uncompress(in_file, out_file, conversion, duration=None, overwrite=False):
     else:
         raise KeyError(f'Conversão {conversion} não suportada.')
 
-    cmd = f'ffmpeg -y -i {in_file} -vf "scale={input_scale},setdar={dar}" '
+    command = f'ffmpeg -y -i {in_file} -vf "scale={input_scale},setdar={dar}" '
     if duration:
-        cmd += f'-t {duration} '
-    cmd += f'{out_file}'
-    run_command(cmd)
+        command += f'-t {duration} '
+    command += f'{out_file}'
+    run_command(command, f'{out_file[:-4]}.log')
 
 
 def converter(in_file, out_file, conversion, overwrite=False):
