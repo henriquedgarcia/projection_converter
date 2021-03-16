@@ -105,6 +105,10 @@ def converter(in_file, out_file, conversion, overwrite=False):
 
 
 def compress(in_file, out_file, conversion, overwrite=False):
+    if os.path.exists(out_file) and not overwrite:
+        print(f'{out_file} exist. Skipping.')
+        return
+
     if conversion == 'erp2cmp':
         output_scale = '2880x1920'
     elif conversion == 'cmp2erp':
@@ -128,17 +132,22 @@ def read_template() -> str:
     return template
 
 
-def run_command(command: str):
+def run_command(command: str, logfile):
     print(command)
     start_time = time.time()
-    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,
-                               stderr=subprocess.STDOUT, encoding='utf-8')
-    while True:
-        if process.poll() is not None:
-            break
-        print('.', end='', flush=True)
-        time.sleep(1)
+    if logfile:
+        with open(logfile, 'w', encoding='utf-8') as f:
+            subprocess.run(command, shell=True, encoding='utf-8', stdout=f,
+                           stderr=subprocess.STDOUT)
     print(f'\nCompleted in {int(time.time() - start_time)} seg')
+
+    # process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,
+    #                            stderr=subprocess.STDOUT, encoding='utf-8')
+    # while True:
+    #     if process.poll() is not None:
+    #         break
+    #     print('.', end='', flush=True)
+    #     time.sleep(1)
 
 
 if __name__ == '__main__':
