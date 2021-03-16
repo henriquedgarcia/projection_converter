@@ -116,9 +116,9 @@ def compress(in_file, out_file, conversion, overwrite=False):
     else:
         raise KeyError(f'Conversão {conversion} não suportada.')
 
-    command = (f'ffmpeg -y -f rawvideo -video_size {output_scale} -framerate 30 '
-               f'-i {in_file} -crf 17 {out_file}')
-    run_command(command)
+    command = (f'ffmpeg -y -f rawvideo -video_size {output_scale} -framerate 30'
+               f' -i {in_file} -crf 17 {out_file}')
+    run_command(command, f'{out_file[:-4]}.log')
 
 
 def save_config(config, filename):
