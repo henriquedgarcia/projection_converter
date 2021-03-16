@@ -86,14 +86,6 @@ def converter(in_file, out_file, conversion, overwrite=False):
     else:
         raise KeyError(f'Conversão {conversion} não suportada.')
 
-    boring_name = out_file.replace('.yuv', f'_{output_scale}x8_cf1.yuv')
-    if os.path.exists(boring_name):
-        os.renames(boring_name, out_file)
-
-    if os.path.exists(out_file) and not overwrite:
-        print(f'{out_file} exist. Skipping.')
-        return
-
     template = read_template()
     params['InputFile'] = f'{in_file}'
     config = template.format(**params)
@@ -105,6 +97,10 @@ def converter(in_file, out_file, conversion, overwrite=False):
     if sys.platform.startswith('win32'):
         command = f'bash -c "{command}"'
     run_command(command)
+
+    boring_name = out_file.replace('.yuv', f'_{output_scale}x8_cf1.yuv')
+    if os.path.exists(boring_name):
+        os.renames(boring_name, out_file)
 
 
 def compress(in_file, out_file, conversion, overwrite=False):
