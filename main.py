@@ -97,7 +97,7 @@ def converter(in_file, out_file, conversion, overwrite=False):
 
     if sys.platform.startswith('win32'):
         command = f'bash -c "{command}"'
-    run_command(command)
+    run_command(command, f'{out_file[:-4]}.log')
 
     boring_name = out_file.replace('.yuv', f'_{output_scale}x8_cf1.yuv')
     if os.path.exists(boring_name):
