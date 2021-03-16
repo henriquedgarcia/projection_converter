@@ -71,6 +71,10 @@ def uncompress(in_file, out_file, conversion, duration=None, overwrite=False):
 
 
 def converter(in_file, out_file, conversion, overwrite=False):
+    if os.path.exists(out_file) and not overwrite:
+        print(f'{out_file} exist. Skipping.')
+        return
+
     if conversion == 'erp2cmp':
         params = erp_params
         output_scale = '2880x1920'
