@@ -88,11 +88,12 @@ def converter(in_file, out_file, conversion, overwrite=False):
 
     template = read_template()
     params['InputFile'] = f'{in_file}'
+    params['OutputFile'] = f'{out_file}'
     config = template.format(**params)
     config_file = f'{out_file[:-4]}.cfg'
     save_config(config, config_file)
 
-    command = f'bin/TApp360ConvertStatic -c {config_file} -OutputFile {out_file}'
+    command = f'bin/TApp360ConvertStatic -c {config_file}'
 
     if sys.platform.startswith('win32'):
         command = f'bash -c "{command}"'
