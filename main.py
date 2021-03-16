@@ -46,7 +46,7 @@ def main(folder, conversion, duration=None, overwrite=False, remove_yuv=False):
         if remove_yuv:
             os.remove(uncompressed_file)
             os.remove(converted_file)
-    shutil.rmtree('temp')
+    # shutil.rmtree('temp')
 
 
 def uncompress(in_file, out_file, conversion, duration=None, overwrite=False):
