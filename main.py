@@ -1,9 +1,8 @@
-import subprocess
 import glob
 import os
+import subprocess
 import sys
 import time
-import shutil
 
 erp_params = {'SourceWidth'       : '3840',
               'SourceHeight'      : '2160',
