@@ -162,7 +162,7 @@ class Converter:
     def run_command(command: str):
         start_time = time.time()
 
-        command = f'bash -c \'{command}\''
+        command = f'bash -c "{command}"'
         print(command)
         os.system(command)
 
