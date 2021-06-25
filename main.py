@@ -162,9 +162,9 @@ class Converter:
         start_time = time.time()
 
         # Method 3
-        if sys.platform.startswith('win32'):
-            command = f'bash -c "{command}"'
-        # command = f'bash -c "{command}"'
+        # if sys.platform.startswith('win32'):
+        #     command = f'bash -c "{command}"'
+        command = f'bash -c \'{command}\''
 
         os.system(command)
 
