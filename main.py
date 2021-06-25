@@ -95,28 +95,33 @@ class Converter:
         in_file = self.uncompressed_file
         out_file = self.converted_file
         log_file = f'{out_file[:-4]}.log'
+        output_scale = self.params['output_scale']
+        boring_name = out_file.replace('.yuv', f'_{output_scale}_30Hz_8b_420.yuv')
         overwrite = self.overwrite
 
-        if os.path.exists(out_file) and not overwrite:
-            print(f'{out_file} exist. Skipping.')
-            return
+        print(f'Converting {in_file} to {out_file}\n'
+              f'mode = {self.conversion}\n'
+              f'overwrite = {self.overwrite}\n'
+              )
 
-        params = self.params['params']
-        params['InputFile'] = f'{in_file}'
-        params['OutputFile'] = f'{out_file}'
-
-        template = self.read_template()
-        config = template.format(**params)
-
-        config_file = f'{out_file[:-4]}.cfg'
-        self.save_config(config, config_file)
-        command = f'{self.app} -c {config_file} |& tee {log_file}'
-
-        self.run_command(command)
-
-        output_scale = self.params['output_scale']
-        boring_name = out_file.replace('.yuv', f'_{output_scale}x8_cf1.yuv')
         if os.path.exists(boring_name):
+            os.renames(boring_name, out_file)
+
+        if os.path.exists(out_file) and not overwrite:
+            print(f'{out_file} exist. Skipping Conversion.')
+        else:
+            params = self.params['params']
+            params['InputFile'] = f'{in_file}'
+            params['OutputFile'] = f'{out_file}'
+
+            template = self.read_template()
+            config = template.format(**params)
+
+            config_file = f'{out_file[:-4]}.cfg'
+            self.save_config(config, config_file)
+            command = f'{self.app} -c {config_file} |& tee {log_file}'
+
+            self.run_command(command)
             os.renames(boring_name, out_file)
 
     def compress(self):
@@ -126,12 +131,17 @@ class Converter:
         overwrite = self.overwrite
         output_scale = self.params['output_scale']
 
+        print(f'Compressing {in_file} to {out_file}\n'
+              f'output_scale = {output_scale}\n'
+              f'overwrite = {self.overwrite}\n'
+              )
         if os.path.exists(out_file) and not overwrite:
             print(f'{out_file} exist. Skipping.')
             return
 
         command = (f'ffmpeg -y -f rawvideo -video_size {output_scale} -framerate 30'
-                   f' -i {in_file} -crf 0 {out_file} |& tee {log_file}')
+                   f' -i {in_file} -crf 0 {out_file}')
+        command = f'{command} |& tee {log_file}'
 
         self.run_command(command)
 
@@ -154,7 +164,7 @@ class Converter:
         # Method 3
         if sys.platform.startswith('win32'):
             command = f'bash -c "{command}"'
-        command = f'bash -c "{command}"'
+        # command = f'bash -c "{command}"'
 
         os.system(command)
 
