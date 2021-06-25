@@ -88,7 +88,7 @@ class Converter:
         if duration:
             command += f'-t {duration} '
 
-        command += f'{out_file} &| tee {log_file}'
+        command += f'{out_file} |& tee {log_file}'
         self.run_command(command)
 
     def converter(self):
@@ -110,7 +110,7 @@ class Converter:
 
         config_file = f'{out_file[:-4]}.cfg'
         self.save_config(config, config_file)
-        command = f'{self.app} -c {config_file} &| tee {log_file}'
+        command = f'{self.app} -c {config_file} |& tee {log_file}'
 
         self.run_command(command)
 
@@ -131,7 +131,7 @@ class Converter:
             return
 
         command = (f'ffmpeg -y -f rawvideo -video_size {output_scale} -framerate 30'
-                   f' -i {in_file} -crf 0 {out_file} &| tee {log_file}')
+                   f' -i {in_file} -crf 0 {out_file} |& tee {log_file}')
 
         self.run_command(command)
 
@@ -154,6 +154,8 @@ class Converter:
         # Method 3
         if sys.platform.startswith('win32'):
             command = f'bash -c "{command}"'
+        command = f'bash -c "{command}"'
+
         os.system(command)
 
         print(f'\nCompleted in {int(time.time() - start_time)} seg.')
@@ -161,4 +163,4 @@ class Converter:
 
 if __name__ == '__main__':
     # Converter(origin_folder='erp', conversion='erp2cmp', duration=1, overwrite=False, remove_yuv=False)
-    Converter(origin_folder='cmp', conversion='cmp2erp', duration=None, overwrite=False, remove_yuv=False)
+    Converter(origin_folder='cmp', conversion='cmp2erp', duration=1, overwrite=False, remove_yuv=False)
