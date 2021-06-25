@@ -1,7 +1,6 @@
 #!/usr/bin/env
 import glob
 import os
-import sys
 import time
 import json
 from pathlib import Path
@@ -109,20 +108,23 @@ class Converter:
 
         if os.path.exists(out_file) and not overwrite:
             print(f'{out_file} exist. Skipping Conversion.')
-        else:
-            params = self.params['params']
-            params['InputFile'] = f'{in_file}'
-            params['OutputFile'] = f'{out_file}'
+            return
 
-            template = self.read_template()
-            config = template.format(**params)
+        params = self.params['params']
+        params['InputFile'] = f'{in_file}'
+        params['OutputFile'] = f'{out_file}'
 
-            config_file = f'{out_file[:-4]}.cfg'
-            self.save_config(config, config_file)
-            command = f'{self.app} -c {config_file} |& tee {log_file}'
+        template = self.read_template()
+        config = template.format(**params)
 
-            self.run_command(command)
-            os.renames(boring_name, out_file)
+        config_file = f'{out_file[:-4]}.cfg'
+        with open(config_file, 'w', encoding='utf-8') as fd:
+            fd.write(config)
+
+        command = f'{self.app} -c {config_file} |& tee {log_file}'
+
+        self.run_command(command)
+        os.renames(boring_name, out_file)
 
     def compress(self):
         in_file = self.converted_file
@@ -158,14 +160,10 @@ class Converter:
 
     @staticmethod
     def run_command(command: str):
-        print(command)
         start_time = time.time()
 
-        # Method 3
-        # if sys.platform.startswith('win32'):
-        #     command = f'bash -c "{command}"'
         command = f'bash -c \'{command}\''
-
+        print(command)
         os.system(command)
 
         print(f'\nCompleted in {int(time.time() - start_time)} seg.')
