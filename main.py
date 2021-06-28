@@ -64,7 +64,7 @@ class Config:
 
         # Find input DAR
         frac = Fraction(int(self.SourceWidth), int(self.SourceHeight))
-        self.input_dar = '/'.join(map(str, frac.as_integer_ratio()))
+        self.input_dar = f'{frac.numerator}/{frac.denominator}'
 
 
 class Converter:
@@ -95,7 +95,7 @@ class Converter:
 
     @property
     def compressed_file(self) -> Path:
-        name = self.name + f'{self.config.output_scale}_{self.config.FrameRate}_{self.config.proj_out}'
+        name = self.name + f'{self.config.output_scale}_{self.config.FrameRate}_{self.config.proj_out.name}'
         return self.output_folder / f'{name}.mp4'
 
     @property
