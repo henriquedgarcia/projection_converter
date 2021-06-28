@@ -95,7 +95,7 @@ class Converter:
 
     @property
     def compressed_file(self) -> Path:
-        name = self.name + f'{self.config.output_scale}_{self.config.FrameRate}'
+        name = self.name + f'{self.config.output_scale}_{self.config.FrameRate}_{self.config.proj_out}'
         return self.output_folder / f'{name}.mp4'
 
     @property
