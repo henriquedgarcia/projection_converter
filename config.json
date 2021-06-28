@@ -1,34 +1,26 @@
 {
   "cmp2erp": {
-    "input_scale": "3240x2160",
-    "dar": "3/2",
-    "output_scale": "3840x2160",
-    "params": {
-      "SourceWidth": "3240",
-      "SourceHeight": "2160",
-      "InputFile": null,
-      "InputGeometryType": "1",
-      "SourceFPStructure": "2 3 4 0 0 0 5 0 3 180 1 270 2 0",
-      "CodingGeometryType": "0",
-      "CodingFPStructure": "1 1 0 0",
-      "CodingFaceWidth": 3840,
-      "CodingFaceHeight": 2160
-    }
+    "SourceWidth": "3240",
+    "SourceHeight": "2160",
+    "FrameRate": "30",
+    "InputFile": null,
+    "InputGeometryType": "1",
+    "SourceFPStructure": "2 3 4 0 0 0 5 0 3 180 1 270 2 0",
+    "CodingGeometryType": "0",
+    "CodingFPStructure": "1 1 0 0",
+    "CodingFaceWidth": "4320",
+    "CodingFaceHeight": "2160"
   },
   "erp2cmp": {
-    "input_scale": "3840x2160",
-    "dar": "2",
-    "output_scale": "3240x2160",
-    "params": {
-      "SourceWidth": "3840",
-      "SourceHeight": "2160",
-      "InputFile": null,
-      "InputGeometryType": "0",
-      "SourceFPStructure": "1 1 0 0",
-      "CodingGeometryType": "1",
-      "CodingFPStructure": "2 3 4 0 0 0 5 0 3 180 1 270 2 0",
-      "CodingFaceWidth": 1080,
-      "CodingFaceHeight": 1080
-    }
+    "SourceWidth": "3840",
+    "SourceHeight": "2160",
+    "FrameRate": "30",
+    "InputFile": null,
+    "InputGeometryType": "0",
+    "SourceFPStructure": "1 1 0 0",
+    "CodingGeometryType": "1",
+    "CodingFPStructure": "2 3 4 0 0 0 5 0 3 180 1 270 2 0",
+    "CodingFaceWidth": 1080,
+    "CodingFaceHeight": 1080
   }
 }
